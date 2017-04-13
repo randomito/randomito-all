@@ -1,4 +1,5 @@
-## Randomito
+## Randomito (1.0.0-alpha1)
+
 Fast and simple object generation in your jUnits (convention over configuration)
 
 Licensed under [BSD License](http://opensource.org/licenses/BSD-3-Clause).
@@ -11,6 +12,16 @@ Beautifully co-exists with Mockito and other mock frameworks. Just give it a try
 Please visit our wiki for [3 minute guide](https://github.com/randomito/randomito-all/wiki).
 
 Remember to check [tests](https://github.com/randomito/randomito-all/tree/master/randomito-examples/src/test/java/org/randomito).
+
+## How to get?
+Library is deployed to maven central (http://central.maven.org/maven2)
+```
+<dependency>
+    <groupId>io.github.randomito</groupId>
+    <artifactId>randomito-all</artifactId>
+    <version>1.0.0-alpha1</version>
+</dependency>
+```
 
 ## Requirements
 JDK7+
