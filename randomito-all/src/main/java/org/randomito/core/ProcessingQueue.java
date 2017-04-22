@@ -5,6 +5,8 @@
  */
 package org.randomito.core;
 
+import org.randomito.core.exception.RandomitoException;
+
 import java.util.LinkedList;
 
 /**
@@ -31,15 +33,12 @@ public abstract class ProcessingQueue implements QueueInserter {
 
     public void process() throws Exception {
         QueueItem queueItem = queue.removeFirst();
-        Object retVal = processingAction(queueItem);
-        if (queueItem.getOnProcessedEvent() != null) {
-            queueItem.getOnProcessedEvent().onProcessed(retVal);
-        }
+        processingAction(queueItem);
     }
 
     public interface OnProcessedEvent {
 
-        void onProcessed(Object processResult);
+        void onProcessed(Object processResult) throws RandomitoException;
     }
 
     public final class QueueItem {

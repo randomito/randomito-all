@@ -11,6 +11,7 @@ import org.randomito.core.ProcessingQueue;
 import org.randomito.core.QueueInserter;
 import org.randomito.core.ReflectionUtils;
 import org.randomito.core.creator.TypeCreatorService;
+import org.randomito.core.exception.RandomitoException;
 import org.randomito.core.generator.TypeCreationServiceAware;
 import org.randomito.core.generator.TypeGenerationPredicate;
 import org.randomito.core.generator.TypeGenerationQueueAware;
@@ -64,7 +65,7 @@ public class MapGenerator implements TypeGenerator, TypeGenerationPredicate, Typ
     private ProcessingQueue.OnProcessedEvent processValueEvent(final DefaultContext ctx, final Map map, final Class valueClass) {
         return new ProcessingQueue.OnProcessedEvent() {
             @Override
-            public void onProcessed(final Object key) {
+            public void onProcessed(final Object key) throws RandomitoException {
                 queueInserter.addToQueue(ctx.overrideType(valueClass))
                         .setOnProcesesedEvent(addToMapEvent(key));
             }
@@ -73,7 +74,7 @@ public class MapGenerator implements TypeGenerator, TypeGenerationPredicate, Typ
                 return new ProcessingQueue.OnProcessedEvent() {
                     @Override
                     @SuppressWarnings("unchecked")
-                    public void onProcessed(final Object value) {
+                    public void onProcessed(final Object value) throws RandomitoException {
                         map.put(key, value);
                     }
                 };

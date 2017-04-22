@@ -18,6 +18,7 @@ import org.randomito.core.generator.impl.ComplexTypeGenerator;
 import org.randomito.core.generator.impl.DateGenerator;
 import org.randomito.core.generator.impl.EnumGenerator;
 import org.randomito.core.generator.impl.MapGenerator;
+import org.randomito.core.generator.impl.NullGenerator;
 import org.randomito.core.generator.impl.NumberGenerator;
 import org.randomito.core.generator.impl.ObjectGenerator;
 import org.randomito.core.generator.impl.StringGenerator;
@@ -56,6 +57,7 @@ public class TypeGeneratorDelegator
         generators.register(new CollectionGenerator());
         generators.register(new MapGenerator());
         generators.register(new ComplexTypeGenerator());
+        generators.register(new NullGenerator());
     }
 
     // delegation

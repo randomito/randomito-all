@@ -155,7 +155,7 @@ public final class ReflectionUtils {
      * @return fields {@link Field}
      */
     public static Field[] getDeclaredFields(Class<?> clazz, boolean inheritanceEnabled) {
-        Set<Field> fields = Sets.newHashSet();
+        Set<Field> fields = Sets.newLinkedHashSet();
         do {
             Collections.addAll(fields, clazz.getDeclaredFields());
             clazz = clazz.getSuperclass();

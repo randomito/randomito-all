@@ -39,7 +39,7 @@ public class ComplexTypeGenerator implements TypeGenerator, TypeGenerationPredic
     private QueueInserter postProcessingQueue;
 
     public boolean canHandle(Class<?> clazz) {
-        return !clazz.isPrimitive() && clazz != Object.class && getDeclaredFields(clazz, true).length > 0;
+        return !clazz.isPrimitive() && clazz != Object.class;
     }
 
     @Override

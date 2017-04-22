@@ -12,6 +12,7 @@ import org.randomito.core.ProcessingQueue;
 import org.randomito.core.QueueInserter;
 import org.randomito.core.ReflectionUtils;
 import org.randomito.core.creator.TypeCreatorService;
+import org.randomito.core.exception.RandomitoException;
 import org.randomito.core.generator.TypeCreationServiceAware;
 import org.randomito.core.generator.TypeGenerationPredicate;
 import org.randomito.core.generator.TypeGenerationQueueAware;
@@ -63,7 +64,7 @@ public class CollectionGenerator implements TypeGenerator, TypeGenerationPredica
         return new ProcessingQueue.OnProcessedEvent() {
             @Override
             @SuppressWarnings("unchecked")
-            public void onProcessed(Object result) {
+            public void onProcessed(Object result) throws RandomitoException {
                 collection.add(result);
             }
         };

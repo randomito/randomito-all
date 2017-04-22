@@ -14,6 +14,7 @@ import org.randomito.core.generator.TypeGeneratorDelegator;
 import org.randomito.core.postprocessor.PostProcessorExecutor;
 
 import java.lang.reflect.Field;
+import java.util.Objects;
 
 /**
  * Randomito Executor.
@@ -41,6 +42,8 @@ class RandomitoExecutor {
     }
 
     void execute(DefaultContext... contexts) {
+        // TODO: typeGeneration is scanning for fields
+        // TODO: postprocessor needs to process ALL junit, not only contexts
         for (final DefaultContext ctx : contexts) {
             typeGenerationQueue.addToQueue(ctx);
             postProcessingQueue.addToQueue(ctx);
@@ -82,13 +85,29 @@ class RandomitoExecutor {
                 DefaultContext ctx = item.getContext();
                 Field field = ctx.getField();
                 ReflectionUtils.makeFieldAccessible(field);
-                Object generate = typeGeneratorDelegator.generate(ctx);
-                if (item.getOnProcessedEvent() == null) {
-                    field.set(ctx.getRef(), generate);
-                } else {
-                    item.getOnProcessedEvent().onProcessed(generate);
+                Object newVal = typeGeneratorDelegator.generate(ctx);
+                Object oldVal = field.get(ctx.getRef());
+                if( item.getOnProcessedEvent() == null ) {
+                    item.setOnProcesesedEvent(createOnProcessed(ctx, field, oldVal));
                 }
-                return generate;
+                item.getOnProcessedEvent().onProcessed(newVal);
+                return newVal;
+            }
+
+            private OnProcessedEvent createOnProcessed(final DefaultContext ctx, final Field field,
+                                                       final Object oldVal) {
+                return new OnProcessedEvent() {
+                    @Override
+                    public void onProcessed(Object newVal) throws RandomitoException {
+                        if( newVal != Void.TYPE && !Objects.equals(oldVal, newVal)) {
+                            try {
+                                field.set(ctx.getRef(), newVal);
+                            } catch (IllegalAccessException e) {
+                                throw new RandomitoException(e);
+                            }
+                        }
+                    }
+                };
             }
         };
     }
