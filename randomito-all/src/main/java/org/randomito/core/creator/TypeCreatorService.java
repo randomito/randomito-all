@@ -9,6 +9,7 @@ import com.google.common.collect.Maps;
 import org.randomito.core.exception.RandomitoException;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 /**
@@ -24,20 +25,32 @@ public class TypeCreatorService {
     /**
      * creates object of given type.
      *
-     * @param type - class to be instantiated.
+     * @param instantor - object requesting the instantiation.
+     * @param type      - type to create
      * @return new instance of given type
      */
-    public Object createForType(Class<?> type) {
+    public Object createForType(Object instantor, Class<?> type) {
+        try {
+            return newInstance(instantor, type);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
+            throw new RandomitoException("Failed to create object for type: " + type + ", try using @Random.TypeCreator() functionality");
+        }
+    }
+
+    private Object newInstance(Object instantor, Class<?> type)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         TypeCreator typeCreator = registry.get(type);
         if (typeCreator != null) {
             return typeCreator.newInstance();
         }
-        try {
+        if (type.isMemberClass()) {
+            Constructor<?> constructor = type.getDeclaredConstructor(instantor.getClass());
+            constructor.setAccessible(true);
+            return constructor.newInstance(instantor);
+        } else {
             Constructor<?> constructor = type.getDeclaredConstructor();
             constructor.setAccessible(true);
             return constructor.newInstance();
-        } catch (Exception e) {
-            throw new RandomitoException("Failed to create object for type: " + type + ", try using @Random.TypeCreator() functionality");
         }
     }
 

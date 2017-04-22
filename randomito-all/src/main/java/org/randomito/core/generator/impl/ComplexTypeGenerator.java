@@ -49,7 +49,7 @@ public class ComplexTypeGenerator implements TypeGenerator, TypeGenerationPredic
             return null;
         }
 
-        Object obj = typeCreatorService.createForType(ctx.getType());
+        Object obj = typeCreatorService.createForType(ctx.getRef(), ctx.getType());
         if (count(ctx) == ctx.getInfo().getDepth()) {
             return null;
         }

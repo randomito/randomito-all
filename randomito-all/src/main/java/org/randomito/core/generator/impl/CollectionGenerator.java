@@ -50,7 +50,7 @@ public class CollectionGenerator implements TypeGenerator, TypeGenerationPredica
         if (ctx.getType().isInterface()) {
             collection = newCollection(ctx.getType());
         } else {
-            collection = (Collection) typeCreatorService.createForType(ctx.getType());
+            collection = (Collection) typeCreatorService.createForType(ctx.getRef(), ctx.getType());
         }
 
         for (int i = 0; i < 3; i++) {

@@ -22,7 +22,7 @@ public class TypeCreatorServiceTest {
 
         // when
         service.register(type, creator);
-        Object forType = service.createForType(type);
+        Object forType = service.createForType(null, type);
 
         // then
         Assert.assertThat(forType, CoreMatchers.is(CoreMatchers.notNullValue()));
@@ -36,7 +36,7 @@ public class TypeCreatorServiceTest {
         Class<TypeCreatorServiceTest> type = TypeCreatorServiceTest.class;
 
         // when
-        Object forType = service.createForType(type);
+        Object forType = service.createForType(null, type);
 
         // then
         Assert.assertThat(forType, CoreMatchers.is(CoreMatchers.notNullValue()));
@@ -49,7 +49,7 @@ public class TypeCreatorServiceTest {
         Class<ClassWithNoDefConstructor> type = ClassWithNoDefConstructor.class;
 
         // when
-        Object forType = service.createForType(type);
+        Object forType = service.createForType(null, type);
 
         // then
         Assert.assertThat(forType, CoreMatchers.is(CoreMatchers.notNullValue()));

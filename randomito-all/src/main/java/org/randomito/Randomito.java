@@ -190,7 +190,7 @@ public final class Randomito {
          */
         public <T> T random(Class<T> clazz, final int depth) {
             RandomitoExecutor executor = createRandomObjectExecutor();
-            Object instance = executor.getTypeCreatorService().createForType(clazz);
+            Object instance = executor.getTypeCreatorService().createForType(null, clazz);
             RandomizationWrapper wrapper = new RandomizationWrapper(instance);
             DefaultContext ctx = new DefaultContext(wrapper, getDeclaredField(wrapper, RandomizationWrapper.INSTANCE_FIELD),
                     new GenerationInfo(RandomizationWrapper.INSTANCE_FIELD, depth, true, false))

@@ -42,8 +42,6 @@ class RandomitoExecutor {
     }
 
     void execute(DefaultContext... contexts) {
-        // TODO: typeGeneration is scanning for fields
-        // TODO: postprocessor needs to process ALL junit, not only contexts
         for (final DefaultContext ctx : contexts) {
             typeGenerationQueue.addToQueue(ctx);
             postProcessingQueue.addToQueue(ctx);

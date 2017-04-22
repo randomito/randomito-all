@@ -43,7 +43,7 @@ public class MapGenerator implements TypeGenerator, TypeGenerationPredicate, Typ
         if (ctx.getField().getType().isInterface()) {
             map = Maps.newHashMap();
         } else {
-            map = (Map) typeCreatorService.createForType(ctx.getField().getType());
+            map = (Map) typeCreatorService.createForType(ctx.getRef(), ctx.getField().getType());
         }
         Class[] genericTypes = ReflectionUtils.getGenericTypes(ctx.getField());
         final Class keyClass;
