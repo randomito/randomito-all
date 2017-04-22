@@ -6,8 +6,6 @@ import org.randomito.core.generator.TypeGenerator;
 
 /**
  * Generator handles all type of types - and does nothing with them.
- * <p>
- * See more: {@link java.lang.Character}
  *
  * @author Miron Balcerzak, 2017
  */
