@@ -22,7 +22,7 @@ public class TypeCreatorServiceTest {
 
         // when
         service.register(type, creator);
-        Object forType = service.createForType(null, type);
+        Object forType = service.createForType(this, type);
 
         // then
         Assert.assertThat(forType, CoreMatchers.is(CoreMatchers.notNullValue()));
@@ -36,7 +36,7 @@ public class TypeCreatorServiceTest {
         Class<TypeCreatorServiceTest> type = TypeCreatorServiceTest.class;
 
         // when
-        Object forType = service.createForType(null, type);
+        Object forType = service.createForType(this, type);
 
         // then
         Assert.assertThat(forType, CoreMatchers.is(CoreMatchers.notNullValue()));
@@ -49,17 +49,33 @@ public class TypeCreatorServiceTest {
         Class<ClassWithNoDefConstructor> type = ClassWithNoDefConstructor.class;
 
         // when
-        Object forType = service.createForType(null, type);
+        Object forType = service.createForType(this, type);
 
         // then
         Assert.assertThat(forType, CoreMatchers.is(CoreMatchers.notNullValue()));
         Assert.assertTrue(forType.getClass() == type);
     }
 
+    @Test
+    public void testCreateForMemberClass() {
+        // given
+        Class<MemberClass> type = MemberClass.class;
+
+        // when
+        Object forType = service.createForType(this, type);
+
+        // then
+        Assert.assertThat(forType, CoreMatchers.is(CoreMatchers.notNullValue()));
+        Assert.assertTrue(forType.getClass() == type);
+    }
 
     static class ClassWithNoDefConstructor {
 
         ClassWithNoDefConstructor(String str) {
         }
+    }
+
+    class MemberClass {
+
     }
 }

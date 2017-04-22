@@ -43,15 +43,25 @@ public class TypeCreatorService {
         if (typeCreator != null) {
             return typeCreator.newInstance();
         }
-        if (type.isMemberClass()) {
+        if (type.isMemberClass() && !hasDefaultConstructor(type)) {
             Constructor<?> constructor = type.getDeclaredConstructor(instantor.getClass());
             constructor.setAccessible(true);
             return constructor.newInstance(instantor);
         } else {
+            // has default constructor
             Constructor<?> constructor = type.getDeclaredConstructor();
             constructor.setAccessible(true);
             return constructor.newInstance();
         }
+    }
+
+    private boolean hasDefaultConstructor(Class<?> type) {
+        try {
+            type.getDeclaredConstructor();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     /**
