@@ -34,7 +34,7 @@ public class RandomitoExecutorTest {
         executor.getPostProcessorExecutor().register(new MinMaxAnnotationPostProcessor());
         // when
 
-        executor.execute(new DefaultContext(instance, ReflectionUtils.getDeclaredField(instance, "anInt"), gi));
+        executor.execute(new DefaultContext(instance, ReflectionUtils.getDeclaredField(instance.getClass(), "anInt"), gi));
 
         // then
         Assert.assertThat(instance.anInt, is(notNullValue()));

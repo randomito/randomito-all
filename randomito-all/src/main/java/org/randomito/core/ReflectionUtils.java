@@ -70,7 +70,7 @@ public final class ReflectionUtils {
         checkNotNull(path);
         Object ref = instance;
         for (String property : path.split("\\.")) {
-            Field refField = getDeclaredField(ref, property);
+            Field refField = getDeclaredField(ref.getClass(), property);
             if (!makeFieldAccessible(refField)) {
                 throw new RandomitoException("Path cannot be accessed: " + path);
             }
@@ -101,7 +101,7 @@ public final class ReflectionUtils {
         String[] split = path.split("\\.");
         for (int i = 0; i < split.length; i++) {
             String property = split[i];
-            refField = getDeclaredField(ref, property);
+            refField = getDeclaredField(ref.getClass(), property);
             if (!makeFieldAccessible(refField)) {
                 throw new RandomitoException("Path cannot be accessed: " + path);
             }
@@ -166,12 +166,11 @@ public final class ReflectionUtils {
     /**
      * Returns {@link Field} from the class or its super classes.
      *
-     * @param instance  - object to used to retrieve the field from
+     * @param clazz  - class to retrieve the field from
      * @param fieldName - field name
      * @return field
      */
-    public static Field getDeclaredField(Object instance, String fieldName) {
-        Class<?> clazz = instance.getClass();
+    public static Field getDeclaredField(Class<?> clazz, String fieldName) {
         while (clazz != Object.class) {
             try {
                 return clazz.getDeclaredField(fieldName);

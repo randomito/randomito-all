@@ -173,7 +173,7 @@ public final class Randomito {
                     .transform(new Function<GenerationInfo, DefaultContext>() {
                         @Override
                         public DefaultContext apply(GenerationInfo info) {
-                            Field field = getDeclaredField(instance, info.getName());
+                            Field field = getDeclaredField(instance.getClass(), info.getName());
                             return new DefaultContext(instance, field, info);
                         }
                     }).toArray(DefaultContext.class);
@@ -192,7 +192,7 @@ public final class Randomito {
             RandomitoExecutor executor = createRandomObjectExecutor();
             Object instance = executor.getTypeCreatorService().createForType(null, clazz);
             RandomizationWrapper wrapper = new RandomizationWrapper(instance);
-            DefaultContext ctx = new DefaultContext(wrapper, getDeclaredField(wrapper, RandomizationWrapper.INSTANCE_FIELD),
+            DefaultContext ctx = new DefaultContext(wrapper, getDeclaredField(wrapper.getClass(), RandomizationWrapper.INSTANCE_FIELD),
                     new GenerationInfo(RandomizationWrapper.INSTANCE_FIELD, depth, true, false))
                     .overrideType(instance.getClass());
             executor.execute(ctx);
