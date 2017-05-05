@@ -1,4 +1,4 @@
-## Randomito (v.1.0.0-alpha4 / release date: 05/05/2017)
+## Randomito (v.1.0.0-alpha3 / release date: 05/05/2017)
 
 Fast and simple object generation in your jUnits (convention over configuration)
 
@@ -19,7 +19,7 @@ Library is deployed to maven central (http://central.maven.org/maven2)
 <dependency>
     <groupId>io.github.randomito</groupId>
     <artifactId>randomito-all</artifactId>
-    <version>1.0.0-alpha4</version>
+    <version>1.0.0-alpha3</version>
 </dependency>
 ```
 
