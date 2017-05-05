@@ -25,6 +25,7 @@ import org.randomito.core.postprocessor.impl.StaticValuePostProcessor;
 import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -84,7 +85,9 @@ public class PostProcessorExecutor {
                     continue;
                 }
                 Object postprocessed = postprocessor.process(ctx.createChild(instance, field), o);
-                field.set(instance, postprocessed);
+                if (!Objects.equals(o, postprocessed)) {
+                    field.set(instance, postprocessed);
+                }
             }
 
         }
