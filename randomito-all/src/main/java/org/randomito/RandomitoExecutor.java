@@ -14,6 +14,7 @@ import org.randomito.core.generator.TypeGeneratorDelegator;
 import org.randomito.core.postprocessor.PostProcessorExecutor;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Objects;
 
 /**
@@ -83,9 +84,15 @@ class RandomitoExecutor {
                 DefaultContext ctx = item.getContext();
                 Field field = ctx.getField();
                 ReflectionUtils.makeFieldAccessible(field);
-                Object newVal = typeGeneratorDelegator.generate(ctx);
                 Object oldVal = field.get(ctx.getRef());
-                if( item.getOnProcessedEvent() == null ) {
+                if (Modifier.isFinal(field.getModifiers())
+                        && Modifier.isStatic(field.getModifiers())
+                        && oldVal != null) {
+                    return oldVal;
+                }
+
+                Object newVal = typeGeneratorDelegator.generate(ctx);
+                if (item.getOnProcessedEvent() == null) {
                     item.setOnProcesesedEvent(createOnProcessed(ctx, field, oldVal));
                 }
                 item.getOnProcessedEvent().onProcessed(newVal);
@@ -97,7 +104,7 @@ class RandomitoExecutor {
                 return new OnProcessedEvent() {
                     @Override
                     public void onProcessed(Object newVal) throws RandomitoException {
-                        if( newVal != Void.TYPE && !Objects.equals(oldVal, newVal)) {
+                        if (newVal != Void.TYPE && !Objects.equals(oldVal, newVal)) {
                             try {
                                 field.set(ctx.getRef(), newVal);
                             } catch (IllegalAccessException e) {

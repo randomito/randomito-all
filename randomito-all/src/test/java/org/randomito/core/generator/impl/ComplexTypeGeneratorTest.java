@@ -3,6 +3,7 @@ package org.randomito.core.generator.impl;
 import org.junit.Before;
 import org.junit.Test;
 import org.randomito.core.DefaultContext;
+import org.randomito.core.ReflectionUtils;
 import org.randomito.test.utils.TestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -50,6 +51,7 @@ public class ComplexTypeGeneratorTest extends BaseGenerationTest {
     public void testGenerate_complexType() throws Exception {
         // given
         DefaultContext ctx = TestUtils.createCtx(new TestingClass(), "object");
+        ReflectionUtils.makeFieldAccessible(ctx.getField());
 
         // when
         Object generated = generator.generate(ctx);
