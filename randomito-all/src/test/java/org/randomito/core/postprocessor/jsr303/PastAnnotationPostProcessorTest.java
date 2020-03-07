@@ -1,32 +1,29 @@
-package org.randomito.core.postprocessor.impl;
+package org.randomito.core.postprocessor.jsr303;
 
 import org.hamcrest.number.OrderingComparison;
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.validation.constraints.Future;
+import javax.validation.constraints.Past;
 import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 
-/**
- * Created by miciek on 07.04.2017.
- */
-public class FutureAnnotationPostProcessorTest extends BasePostProcessorTest {
+public class PastAnnotationPostProcessorTest extends BasePostProcessorTest {
 
-    public FutureAnnotationPostProcessorTest() {
-        super(new FutureAnnotationPostProcessor());
+    public PastAnnotationPostProcessorTest() {
+        super(new PastAnnotationPostProcessor());
     }
 
     @Test
-    public void testFuture() {
+    public void testPast() {
         // given
         Wrapper wrapper = new Wrapper();
 
-        Date future = postprocess(wrapper, "future", Date.class);
+        Date past = postprocess(wrapper, "past", Date.class);
 
-        Assert.assertThat(future, OrderingComparison.greaterThan(new Date()));
+        Assert.assertThat(past, OrderingComparison.lessThan(new Date()));
     }
 
     @Test
@@ -41,10 +38,11 @@ public class FutureAnnotationPostProcessorTest extends BasePostProcessorTest {
 
     static class Wrapper {
 
-        @Future
-        private Date future = new Date(0);
+        @Past
+        private Date past = new Date(Integer.MAX_VALUE);
 
         private Date date;
 
     }
+
 }

@@ -8,7 +8,7 @@ import org.randomito.core.DefaultContext;
 import org.randomito.core.GenerationInfo;
 import org.randomito.core.ReflectionUtils;
 import org.randomito.core.generator.impl.NumberGenerator;
-import org.randomito.core.postprocessor.impl.MinMaxAnnotationPostProcessor;
+import org.randomito.core.postprocessor.jsr303.MinMaxAnnotationPostProcessor;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;

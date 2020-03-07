@@ -5,25 +5,25 @@
  */
 package org.randomito.core.postprocessor;
 
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import org.apache.commons.lang3.ArrayUtils;
 import org.randomito.core.DefaultContext;
 import org.randomito.core.ReflectionUtils;
-import org.randomito.core.postprocessor.impl.AssertFalseAnnotationPostProcessor;
-import org.randomito.core.postprocessor.impl.AssertTrueAnnotationPostProcessor;
-import org.randomito.core.postprocessor.impl.DecimalMinMaxAnnotationPostProcessor;
-import org.randomito.core.postprocessor.impl.DigitsAnnotationPostProcessor;
-import org.randomito.core.postprocessor.impl.FutureAnnotationPostProcessor;
-import org.randomito.core.postprocessor.impl.InjectReferenceByPostProcessor;
-import org.randomito.core.postprocessor.impl.MinMaxAnnotationPostProcessor;
-import org.randomito.core.postprocessor.impl.NullAnnotationPostProcessor;
-import org.randomito.core.postprocessor.impl.PastAnnotationPostProcessor;
-import org.randomito.core.postprocessor.impl.SizeAnnotationPostProcessor;
-import org.randomito.core.postprocessor.impl.StaticValuePostProcessor;
+import org.randomito.core.postprocessor.core.SetValueReferenceByPostProcessor;
+import org.randomito.core.postprocessor.core.SetValueValuePostProcessor;
+import org.randomito.core.postprocessor.jsr303.AssertFalseAnnotationPostProcessor;
+import org.randomito.core.postprocessor.jsr303.AssertTrueAnnotationPostProcessor;
+import org.randomito.core.postprocessor.jsr303.DecimalMinMaxAnnotationPostProcessor;
+import org.randomito.core.postprocessor.jsr303.DigitsAnnotationPostProcessor;
+import org.randomito.core.postprocessor.jsr303.FutureAnnotationPostProcessor;
+import org.randomito.core.postprocessor.jsr303.MinMaxAnnotationPostProcessor;
+import org.randomito.core.postprocessor.jsr303.NullAnnotationPostProcessor;
+import org.randomito.core.postprocessor.jsr303.PastAnnotationPostProcessor;
+import org.randomito.core.postprocessor.jsr303.SizeAnnotationPostProcessor;
 
 import java.lang.reflect.Field;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -38,8 +38,8 @@ import java.util.Set;
  */
 public class PostProcessorExecutor {
 
-    private final Map<Class<?>, PostProcessor> registry = Maps.newLinkedHashMap();
-    private final Set<Class<?>> excluded = Sets.newHashSet();
+    private final Map<Class<?>, PostProcessor> registry = new LinkedHashMap<>();
+    private final Set<Class<?>> excluded = new HashSet<>();
 
     public static void registerJsr303(PostProcessorExecutor postProcessorExecutor) {
         postProcessorExecutor.register(new NullAnnotationPostProcessor());
@@ -55,8 +55,8 @@ public class PostProcessorExecutor {
     }
 
     public static void registerCorePostProcessors(PostProcessorExecutor postProcessorExecutor) {
-        postProcessorExecutor.register(new StaticValuePostProcessor());
-        postProcessorExecutor.register(new InjectReferenceByPostProcessor());
+        postProcessorExecutor.register(new SetValueValuePostProcessor());
+        postProcessorExecutor.register(new SetValueReferenceByPostProcessor());
     }
 
     @SuppressWarnings("unchecked")

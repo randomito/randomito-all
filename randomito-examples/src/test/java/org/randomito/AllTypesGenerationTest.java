@@ -23,7 +23,7 @@ import static org.junit.Assert.assertThat;
  */
 public class AllTypesGenerationTest {
 
-    private final static int DEPTH = 10000;
+    private final static int DEPTH = 10_000;
 
     @Random(depth = DEPTH)
     private AllTypesObject object1;
@@ -37,7 +37,11 @@ public class AllTypesGenerationTest {
         Randomito.init(this);
 
         // then
-        assertValues(object1);
+        AllTypesObject object = object1;
+        do {
+            assertValues(object);
+        }
+        while ((object = object.inner) != null);
     }
 
     @Test
@@ -49,7 +53,11 @@ public class AllTypesGenerationTest {
         object1 = Randomito.random(AllTypesObject.class, DEPTH);
 
         // then
-        assertValues(object1);
+        AllTypesObject object = object1;
+        do {
+            assertValues(object);
+        }
+        while ((object = object.inner) != null);
     }
 
     private void assertValues(AllTypesObject object) {

@@ -1,19 +1,20 @@
-package org.randomito.core.postprocessor.impl;
+package org.randomito.core.postprocessor.jsr303;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.randomito.annotation.Random;
 import org.randomito.core.exception.RandomitoException;
+import org.randomito.core.postprocessor.core.SetValueReferenceByPostProcessor;
 
 import static org.hamcrest.CoreMatchers.is;
 
 /**
  * Created by miciek on 07.04.2017.
  */
-public class InjectReferenceByPostProcessorTest extends BasePostProcessorTest {
+public class SetValueReferenceByPostProcessorTest extends BasePostProcessorTest {
 
-    public InjectReferenceByPostProcessorTest() {
-        super(new InjectReferenceByPostProcessor());
+    public SetValueReferenceByPostProcessorTest() {
+        super(new SetValueReferenceByPostProcessor());
     }
 
     @Test
@@ -70,7 +71,7 @@ public class InjectReferenceByPostProcessorTest extends BasePostProcessorTest {
         @Random.SetValue(property = "value", referenceBy = "referenceByString")
         private InnerClass object1;
 
-        @Random.Values({
+        @Random.SetValues({
                 @Random.SetValue(property = "value", referenceBy = "referenceByString")
         })
         private InnerClass object2;

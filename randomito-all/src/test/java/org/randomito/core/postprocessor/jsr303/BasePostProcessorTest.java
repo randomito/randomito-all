@@ -1,4 +1,4 @@
-package org.randomito.core.postprocessor.impl;
+package org.randomito.core.postprocessor.jsr303;
 
 import org.randomito.core.DefaultContext;
 import org.randomito.core.exception.RandomitoException;

@@ -1,6 +1,5 @@
 package org.randomito.core.generator.impl;
 
-import com.google.common.collect.Lists;
 import org.randomito.core.ProcessingQueue;
 import org.randomito.core.creator.TypeCreatorService;
 import org.randomito.core.generator.PostProcessingQueueAware;
@@ -8,11 +7,12 @@ import org.randomito.core.generator.TypeCreationServiceAware;
 import org.randomito.core.generator.TypeGenerationQueueAware;
 import org.randomito.core.generator.TypeGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class BaseGenerationTest {
 
-    private List<ProcessingQueue.QueueItem> list = Lists.newArrayList();
+    private List<ProcessingQueue.QueueItem> list = new ArrayList<>();
 
     public final <T extends TypeGenerator> T init(T generator) {
         if (generator instanceof TypeCreationServiceAware) {

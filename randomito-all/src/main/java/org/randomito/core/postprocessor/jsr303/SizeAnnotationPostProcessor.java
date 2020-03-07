@@ -3,7 +3,7 @@
  * This program is made available under the terms of the "New BSD License".
  * SEE MORE: https://opensource.org/licenses/BSD-3-Clause
  */
-package org.randomito.core.postprocessor.impl;
+package org.randomito.core.postprocessor.jsr303;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.randomito.core.postprocessor.AnnotationInfo;

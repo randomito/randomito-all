@@ -5,7 +5,6 @@
  */
 package org.randomito.core.generator.impl;
 
-import com.google.common.collect.Maps;
 import org.randomito.core.DefaultContext;
 import org.randomito.core.ProcessingQueue;
 import org.randomito.core.QueueInserter;
@@ -17,6 +16,7 @@ import org.randomito.core.generator.TypeGenerationPredicate;
 import org.randomito.core.generator.TypeGenerationQueueAware;
 import org.randomito.core.generator.TypeGenerator;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -41,7 +41,7 @@ public class MapGenerator implements TypeGenerator, TypeGenerationPredicate, Typ
     public Object generate(final DefaultContext ctx) throws Exception {
         final Map map;
         if (ctx.getField().getType().isInterface()) {
-            map = Maps.newHashMap();
+            map = new HashMap();
         } else {
             map = (Map) typeCreatorService.createForType(ctx.getRef(), ctx.getField().getType());
         }

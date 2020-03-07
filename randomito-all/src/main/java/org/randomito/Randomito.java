@@ -5,10 +5,6 @@
  */
 package org.randomito;
 
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Sets;
 import org.randomito.core.AnnotationConfigScanner;
 import org.randomito.core.DefaultContext;
 import org.randomito.core.GenerationInfo;
@@ -16,10 +12,12 @@ import org.randomito.core.creator.TypeCreatorHolder;
 import org.randomito.core.generator.TypeGeneratorDelegator;
 import org.randomito.core.postprocessor.PostProcessor;
 import org.randomito.core.postprocessor.PostProcessorExecutor;
-import org.randomito.core.postprocessor.impl.NullifyIdVersionPostProcessor;
+import org.randomito.core.postprocessor.jsr303.NullifyIdVersionPostProcessor;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.randomito.core.ReflectionUtils.getDeclaredField;
@@ -73,7 +71,7 @@ public final class Randomito {
      * returns randomito instance, with default depth of 1.
      *
      * @param clazz - class to be randomito.
-     * @param <T>    type of object.
+     * @param <T>   type of object.
      * @return new instance with random values.
      */
     public static <T> T random(Class<T> clazz) {
@@ -84,7 +82,7 @@ public final class Randomito {
      * returns randomito instance.
      *
      * @param clazz - class to be randomito.
-     * @param <T>    type of object.
+     * @param <T>   type of object.
      * @return new instance with random values for given depth.
      */
     public static <T> T random(Class<T> clazz, int depth) {
@@ -93,6 +91,7 @@ public final class Randomito {
 
     /**
      * inits annotation scan and processes class.
+     *
      * @return Builder instance
      */
     public static Builder custom() {
@@ -104,7 +103,7 @@ public final class Randomito {
         private boolean disableExceptions = false;
         private boolean disableJsr303 = false;
         private boolean disablePersistenceAnnotations = false;
-        private Set<Class<?>> excluded = Sets.newHashSet();
+        private Set<Class<?>> excluded = new HashSet<>();
 
         private Builder() {
 
@@ -169,23 +168,19 @@ public final class Randomito {
             for (TypeCreatorHolder creator : results.getTypeCreators()) {
                 executor.getTypeCreatorService().register(creator.getType(), creator.getCreator());
             }
-            DefaultContext[] contexts = FluentIterable.from(results.getGenerationInfo())
-                    .transform(new Function<GenerationInfo, DefaultContext>() {
-                        @Override
-                        public DefaultContext apply(GenerationInfo info) {
-                            Field field = getDeclaredField(instance.getClass(), info.getName());
-                            return new DefaultContext(instance, field, info);
-                        }
-                    }).toArray(DefaultContext.class);
+            DefaultContext[] contexts = Arrays.stream(results.getGenerationInfo()).map(info -> {
+                Field field = getDeclaredField(instance.getClass(), info.getName());
+                return new DefaultContext(instance, field, info);
+            }).toArray(DefaultContext[]::new);
             executor.execute(contexts);
         }
 
         /**
          * creates a single instance of randomito object.
          *
-         * @param clazz    - type to be randomito.
-         * @param depth    - depth of randomization.
-         * @param <T>      - type of the class.
+         * @param clazz - type to be randomito.
+         * @param depth - depth of randomization.
+         * @param <T>   - type of the class.
          * @return - new instance, with randomito values.
          */
         public <T> T random(Class<T> clazz, final int depth) {
@@ -202,7 +197,7 @@ public final class Randomito {
         private RandomitoExecutor createRandomObjectExecutor() {
             RandomitoExecutor executor = new RandomitoExecutor();
             executor.throwExceptions(!disableExceptions);
-            executor.getPostProcessorExecutor().excludeClasses(Iterables.toArray(excluded, Class.class));
+            executor.getPostProcessorExecutor().excludeClasses(excluded.toArray(new Class[0]));
             if (!disableJsr303) {
                 PostProcessorExecutor.registerJsr303(executor.getPostProcessorExecutor());
             }

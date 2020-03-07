@@ -5,12 +5,14 @@
  */
 package org.randomito.core.generator;
 
-import com.google.common.base.Preconditions;
-import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
 import org.randomito.core.DefaultContext;
 import org.randomito.core.QueueInserter;
 import org.randomito.core.creator.TypeCreatorService;
+import org.randomito.core.exception.RandomitoException;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Wrapper for TypeGenerator interfaces.
@@ -68,21 +70,18 @@ public class DefaultTypeGenerator implements TypeGenerator, TypeGenerationPredic
      */
     private class HandledClassesPrecondition implements TypeGenerationPredicate {
 
-        private final Class[] handledClasses;
+        private final Set<Class> handledClasses = new HashSet<>();
 
         HandledClassesPrecondition(Class[] handledClasses) {
-            this.handledClasses = Preconditions.checkNotNull(handledClasses);
+            if (handledClasses == null) {
+                throw new RandomitoException("Argument cannot be null");
+            }
+            Collections.addAll(this.handledClasses, handledClasses);
         }
 
         @Override
         public boolean canHandle(final Class<?> clazz) {
-            return FluentIterable.from(handledClasses)
-                    .anyMatch(new Predicate<Class>() {
-                        @Override
-                        public boolean apply(Class input) {
-                            return clazz == input;
-                        }
-                    });
+            return this.handledClasses.contains(clazz);
         }
 
     }

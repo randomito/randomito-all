@@ -1,10 +1,10 @@
 package org.randomito.core;
 
-import com.google.common.collect.Lists;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.randomito.test.utils.TestUtils;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -34,7 +34,7 @@ public class ProcessingQueueTest {
     public void testProcessingAction() throws Exception {
         // given
         DefaultContext ctx = TestUtils.createCtx(new Wrapper(), "anInt");
-        final List<DefaultContext> queueItems = Lists.newLinkedList();
+        final List<DefaultContext> queueItems = new LinkedList<>();
 
         ProcessingQueue processingQueue = new ProcessingQueue() {
             @Override

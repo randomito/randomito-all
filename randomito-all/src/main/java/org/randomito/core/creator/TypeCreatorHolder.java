@@ -5,10 +5,12 @@
  */
 package org.randomito.core.creator;
 
+import org.randomito.annotation.Random;
+
 /**
  * Data transfer object mapping values from @Random.TypeCreator annotation.
  * See more:
- * {@link org.randomito.annotation.Random.TypeCreator}
+ * {@link Random.TypeCreator}
  * {@link org.randomito.core.creator.TypeCreatorService}
  *
  * @author Miron Balcerzak, 2017

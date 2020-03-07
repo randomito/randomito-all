@@ -3,7 +3,7 @@
  * This program is made available under the terms of the "New BSD License".
  * SEE MORE: https://opensource.org/licenses/BSD-3-Clause
  */
-package org.randomito.core.postprocessor.impl;
+package org.randomito.core.postprocessor.jsr303;
 
 import org.apache.commons.lang3.RandomUtils;
 import org.randomito.core.ReflectionUtils;
@@ -15,9 +15,9 @@ import static java.lang.Integer.valueOf;
  * Abstract class for all range operations.
  * <p>
  * See more:
- * {@link org.randomito.core.postprocessor.impl.DecimalMinMaxAnnotationPostProcessor}
- * {@link org.randomito.core.postprocessor.impl.MinMaxAnnotationPostProcessor}
- * {@link org.randomito.core.postprocessor.impl.SizeAnnotationPostProcessor}
+ * {@link org.randomito.core.postprocessor.jsr303.DecimalMinMaxAnnotationPostProcessor}
+ * {@link org.randomito.core.postprocessor.jsr303.MinMaxAnnotationPostProcessor}
+ * {@link org.randomito.core.postprocessor.jsr303.SizeAnnotationPostProcessor}
  *
  * @author Miron Balcerzak, 2017
  */

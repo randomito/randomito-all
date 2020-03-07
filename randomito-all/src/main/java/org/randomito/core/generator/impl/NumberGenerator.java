@@ -5,14 +5,16 @@
  */
 package org.randomito.core.generator.impl;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
 import org.apache.commons.lang3.RandomUtils;
 import org.randomito.core.DefaultContext;
 import org.randomito.core.ReflectionUtils;
 import org.randomito.core.exception.RandomitoException;
 import org.randomito.core.generator.TypeGenerationPredicate;
 import org.randomito.core.generator.TypeGenerator;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Handles all numbers (boxed/unboxed) and generates a value between 0 and 127.
@@ -29,19 +31,16 @@ import org.randomito.core.generator.TypeGenerator;
  */
 public class NumberGenerator implements TypeGenerator, TypeGenerationPredicate {
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public boolean canHandle(final Class<?> clazz) {
-        return FluentIterable.of(Integer.TYPE, Long.TYPE, Byte.TYPE, Float.TYPE, Double.TYPE, Short.TYPE,
-                Integer.class, Long.class, Byte.class, Float.class, Double.class, Short.class)
-                .anyMatch(new Predicate<Class<?>>() {
-                    @Override
-                    public boolean apply(Class<?> input) {
-                        return input == clazz;
-                    }
-                });
-    }
+    private static final Set<Class<?>> SUPPORTED_TYPES = new HashSet<>(12);
 
+    static {
+        Collections.addAll(SUPPORTED_TYPES, Integer.TYPE, Long.TYPE, Byte.TYPE, Float.TYPE, Double.TYPE, Short.TYPE,
+                Integer.class, Long.class, Byte.class, Float.class, Double.class, Short.class);
+    }
+    @Override
+    public boolean canHandle(final Class<?> clazz) {
+        return SUPPORTED_TYPES.contains(clazz);
+    }
 
     @Override
     public Object generate(DefaultContext ctx) throws Exception {

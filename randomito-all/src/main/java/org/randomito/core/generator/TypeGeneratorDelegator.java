@@ -5,8 +5,6 @@
  */
 package org.randomito.core.generator;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import org.randomito.core.DefaultContext;
 import org.randomito.core.QueueInserter;
 import org.randomito.core.creator.TypeCreatorService;
@@ -23,6 +21,8 @@ import org.randomito.core.generator.impl.NumberGenerator;
 import org.randomito.core.generator.impl.ObjectGenerator;
 import org.randomito.core.generator.impl.StringGenerator;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,8 +39,8 @@ import java.util.Map;
 public class TypeGeneratorDelegator
         implements TypeGenerator, TypeGenerationQueueAware, PostProcessingQueueAware, TypeCreationServiceAware {
 
-    private final List<DefaultTypeGenerator> generators = Lists.newLinkedList();
-    private final Map<Class<?>, TypeGenerator> cache = Maps.newHashMap();
+    private final List<DefaultTypeGenerator> generators = new LinkedList<>();
+    private final Map<Class<?>, TypeGenerator> cache = new HashMap<>();
     private QueueInserter typeGenerationQueue;
     private QueueInserter postProcessingQueue;
     private TypeCreatorService typeCreatorService;

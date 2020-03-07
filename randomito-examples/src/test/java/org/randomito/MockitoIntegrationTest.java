@@ -17,7 +17,7 @@ import static org.junit.Assert.assertThat;
 public class MockitoIntegrationTest {
 
     @Random
-    @Random.Values({
+    @Random.SetValues({
             @Random.SetValue(property = "id", value = "1"),
             @Random.SetValue(property = "presetValue", value = "not-generated")
     })

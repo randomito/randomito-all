@@ -1,17 +1,18 @@
-package org.randomito.core.postprocessor.impl;
+package org.randomito.core.postprocessor.jsr303;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.randomito.annotation.Random;
 import org.randomito.core.exception.RandomitoException;
+import org.randomito.core.postprocessor.core.SetValueValuePostProcessor;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 
-public class StaticValuePostProcessorTest extends BasePostProcessorTest {
+public class SetValueValuePostProcessorTest extends BasePostProcessorTest {
 
-    public StaticValuePostProcessorTest() {
-        super(new StaticValuePostProcessor());
+    public SetValueValuePostProcessorTest() {
+        super(new SetValueValuePostProcessor());
     }
 
     @Test
@@ -92,12 +93,12 @@ public class StaticValuePostProcessorTest extends BasePostProcessorTest {
         @Random.SetValue(property = "value", value = "String-value")
         private InnerClass object1;
 
-        @Random.Values({
+        @Random.SetValues({
                 @Random.SetValue(property = "value", value = "String-value")
         })
         private InnerClass object2;
 
-        @Random.Values({
+        @Random.SetValues({
                 @Random.SetValue(property = "value", value = Random.NULL)
         })
         private InnerClass object3;

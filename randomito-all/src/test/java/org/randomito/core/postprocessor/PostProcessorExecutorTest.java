@@ -1,7 +1,7 @@
 package org.randomito.core.postprocessor;
 
 import org.junit.Test;
-import org.randomito.core.postprocessor.impl.AssertTrueAnnotationPostProcessor;
+import org.randomito.core.postprocessor.jsr303.AssertTrueAnnotationPostProcessor;
 import org.randomito.test.utils.TestUtils;
 
 import javax.validation.constraints.AssertTrue;

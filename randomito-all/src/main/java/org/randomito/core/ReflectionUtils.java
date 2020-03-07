@@ -5,8 +5,6 @@
  */
 package org.randomito.core;
 
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Sets;
 import org.apache.commons.lang3.ClassUtils;
 import org.randomito.core.exception.RandomitoException;
 
@@ -16,9 +14,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static org.apache.commons.lang3.ArrayUtils.subarray;
 import static org.apache.commons.lang3.StringUtils.join;
 
@@ -67,7 +65,9 @@ public final class ReflectionUtils {
      * @throws IllegalAccessException - exception thrown if field is innaccessible.
      */
     public static Object getPathValue(Object instance, String path) throws IllegalAccessException {
-        checkNotNull(path);
+        if (path == null) {
+            throw new RandomitoException("'path' cannot be null!");
+        }
         Object ref = instance;
         for (String property : path.split("\\.")) {
             Field refField = getDeclaredField(ref.getClass(), property);
@@ -95,7 +95,9 @@ public final class ReflectionUtils {
      * @throws InstantiationException    - exception
      */
     public static void setPathValue(Object instance, String path, Object value) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        checkNotNull(path);
+        if (path == null) {
+            throw new RandomitoException("'path' cannot be null!");
+        }
         Object ref = instance;
         Field refField = null;
         String[] split = path.split("\\.");
@@ -155,18 +157,18 @@ public final class ReflectionUtils {
      * @return fields {@link Field}
      */
     public static Field[] getDeclaredFields(Class<?> clazz, boolean inheritanceEnabled) {
-        Set<Field> fields = Sets.newLinkedHashSet();
+        Set<Field> fields = new LinkedHashSet<>();
         do {
             Collections.addAll(fields, clazz.getDeclaredFields());
             clazz = clazz.getSuperclass();
         } while (clazz != Object.class && inheritanceEnabled);
-        return Iterables.toArray(fields, Field.class);
+        return fields.toArray(new Field[0]);
     }
 
     /**
      * Returns {@link Field} from the class or its super classes.
      *
-     * @param clazz  - class to retrieve the field from
+     * @param clazz     - class to retrieve the field from
      * @param fieldName - field name
      * @return field
      */

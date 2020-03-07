@@ -32,7 +32,7 @@ public class RandomitoTest {
 
     // --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
     @Random
-    @Random.Values({
+    @Random.SetValues({
             @Random.SetValue(property = "street", value = "Golden Street")
     })
     private Address test1_address;
@@ -60,12 +60,12 @@ public class RandomitoTest {
     // --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     @Random
-    @Random.Values({
+    @Random.SetValues({
             @Random.SetValue(property = "street", value = "Golden Street")
     })
     private Address test2_address;
     @Random(depth = 2)
-    @Random.Values({
+    @Random.SetValues({
             @Random.SetValue(property = "address.street", value = "Brown Street"),
             @Random.SetValue(property = "login", value = Random.NULL)
     })

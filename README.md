@@ -24,7 +24,7 @@ Library is deployed to maven central (http://central.maven.org/maven2)
 ```
 
 ## Requirements
-JDK7+
+JDK8 +
 
 ## Acknowledgements
 Developers:

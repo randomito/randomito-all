@@ -79,7 +79,7 @@ public @interface Random {
      */
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.FIELD)
-    @interface Values {
+    @interface SetValues {
         SetValue[] value();
     }
 

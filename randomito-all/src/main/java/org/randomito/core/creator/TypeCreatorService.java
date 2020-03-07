@@ -5,11 +5,11 @@
  */
 package org.randomito.core.creator;
 
-import com.google.common.collect.Maps;
 import org.randomito.core.exception.RandomitoException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -20,7 +20,7 @@ import java.util.Map;
  */
 public class TypeCreatorService {
 
-    private final Map<Class, TypeCreator> registry = Maps.newHashMap();
+    private final Map<Class<?>, TypeCreator> registry = new HashMap<>();
 
     /**
      * creates object of given type.
@@ -70,7 +70,7 @@ public class TypeCreatorService {
      * @param type    - class o be instantiated
      * @param creator - creator for type
      */
-    public void register(Class type, TypeCreator creator) {
+    public void register(Class<?> type, TypeCreator creator) {
         registry.put(type, creator);
     }
 }
