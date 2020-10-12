@@ -43,7 +43,7 @@
         <cobertura.branchRate>70</cobertura.branchRate>
         <cobertura.lineRate>70</cobertura.lineRate>
         <!--lib version-->
-        <junit.version>4.11</junit.version>
+        <junit.version>4.13.1</junit.version>
         <commons-lang3.version>3.5</commons-lang3.version>
         <validation-api.version>1.1.0.Final</validation-api.version>
         <javax.inject.version>1</javax.inject.version>
